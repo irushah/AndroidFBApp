@@ -1,15 +1,33 @@
 package com.example.wishlist4;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
+	private MainFragment mainFragment;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.main);
+
+		if (savedInstanceState == null)
+		{
+			//Fresh visit - Add the fragment on initial activity setup
+			mainFragment = new MainFragment();
+			getSupportFragmentManager()
+			.beginTransaction()
+			.add(android.R.id.content, mainFragment)
+			.commit();
+		}
+		else
+		{
+			//or set the fragment from restored state info
+			mainFragment = (MainFragment) getSupportFragmentManager()
+					.findFragmentById(android.R.id.content);
+		}
 	}
 
 	@Override
